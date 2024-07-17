@@ -2,14 +2,17 @@ USE sakila;
 -- Challenge 1
 -- 1.1 Determine the shortest and longest movie durations and name the values as max_duration and min_duration.
 SELECT 
-    MIN(rental_duration) AS min_duration, 
-    MAX(rental_duration) AS max_duration 
+    MIN(length) AS min_duration, 
+    MAX(length) AS max_duration 
 FROM 
     film;
 -- 1.2. Express the average movie duration in hours and minutes. Don't use decimals.
 -- Hint: Look for floor and round functions.
 -- Average duration in hours, rounded down
-SELECT FLOOR(AVG(rental_duration) / 60)  FROM film;
+SELECT 
+FLOOR(AVG(rental_duration) / 60) AS Hours,
+FLOOR(AVG(rental_duration) % 60) AS Min
+  FROM film;
 -- You need to gain insights related to rental dates:
 -- 2.1 Calculate the number of days that the company has been operating.
 -- Hint: To do this, use the rental table, and the DATEDIFF() function to subtract the earliest date in the rental_date column from the latest date.
@@ -24,7 +27,6 @@ SELECT *, MONTH(rental_date) AS rental_month, DAYNAME(rental_date) AS rental_wee
 -- the query should still be written to handle such cases in the future.
 -- Hint: Look for the IFNULL() function.
 SELECT title, IFNULL(CAST(rental_duration AS CHAR), 'Not Available') AS rental_duration FROM film ORDER BY title ASC;
-
 
 -- Challenge 2
 -- you need to analyze the films in the collection to gain some more insights. Using the film table, determine:
